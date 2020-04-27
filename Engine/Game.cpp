@@ -38,6 +38,27 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
+    if ( wnd.kbd.KeyIsPressed(VK_UP))
+    {
+        dudeY -= 3;
+    }
+    if (wnd.kbd.KeyIsPressed(VK_DOWN))
+    {
+        dudeY += 3;
+    }
+    if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+    {
+        dudeX += 3;
+    }
+    if (wnd.kbd.KeyIsPressed(VK_LEFT))
+    {
+        dudeX -= 3;
+    }
+
+    dudeX = ClampScreenX(dudeX, dudeWidth);
+    dudeY = ClampScreenY(dudeY, dudeHeight);
+    
 }
 
 void Game::DrawFace(int x, int y)
@@ -601,11 +622,45 @@ void Game::DrawPoo(int x, int y)
 
 }
 
-void Game::ComposeFrame()
+int Game::ClampScreenX(int x, int width)
 {
 
-    DrawFace( dudeX, dudeY);
-    DrawPoo( poo0X, poo0Y);
+    if (x <= 0)
+    {
+        return x = 0;
+    }
+    else if (x + width >= gfx.ScreenWidth)
+    {
+        return x = gfx.ScreenWidth - width;
+    }
+    else
+    {
+        return x;
+    }
+
+}
+
+int Game::ClampScreenY(int y, int height)
+{
+    if (y < 0)
+    {
+        return y = 1;
+    }
+    else if (y + height >= gfx.ScreenHeight)
+    {
+        return y = gfx.ScreenHeight - height;
+    }
+    else
+    {
+        return y;
+    }
+}
+
+void Game::ComposeFrame()
+{
+    
+    DrawFace(dudeX, dudeY);
+    DrawPoo(poo0X, poo0Y);
     DrawPoo(poo1X, poo1Y);
     DrawPoo(poo2X, poo2Y);
 

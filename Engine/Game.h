@@ -39,7 +39,8 @@ private:
 
     void DrawFace(int x, int y);
     void DrawPoo(int x, int y);
-
+    int ClampScreenX( int x, int width);
+    int ClampScreenY( int y, int height);
     /********************************/
 private:
     MainWindow& wnd;
@@ -47,14 +48,18 @@ private:
     /********************************/
     /*  User Variables              */
 
-    int dudeX = 200;
+    int dudeX = 100;
     int dudeY = 300;
+    int dudeWidth = 20;
+    int dudeHeight = 20;
     int poo0X = 450;
-    int poo0Y = 230;
+    int poo0Y = 430;
     int poo1X = 300;
     int poo1Y = 180;
     int poo2X = 440;
     int poo2Y = 480;
+    int pooWidth = 24;
+    int pooHeight = 24;
     bool poo0IsEaten = false;
     bool poo1IsEaten = false;
 
