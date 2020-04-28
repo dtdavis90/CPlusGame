@@ -39,8 +39,14 @@ private:
 
     void DrawFace(int x, int y);
     void DrawPoo(int x, int y);
-    int ClampScreenX( int x, int width);
-    int ClampScreenY( int y, int height);
+    void DrawGameOver(int x, int y);
+    void DrawTitleScreen(int x, int y);
+    int MoveX(int x, int vx);
+    int MoveY(int y, int vy);
+    int ClampScreenX(int x, int width);
+    int ClampScreenY(int y, int height);
+    bool isColliding(int x0, int y0, int width0, int height0, int x1, int y1, int width1, int height1);
+
     /********************************/
 private:
     MainWindow& wnd;
@@ -50,18 +56,24 @@ private:
 
     int dudeX = 100;
     int dudeY = 300;
-    int dudeWidth = 20;
-    int dudeHeight = 20;
     int poo0X = 450;
     int poo0Y = 430;
     int poo1X = 300;
     int poo1Y = 180;
     int poo2X = 440;
     int poo2Y = 480;
+    int VX = 2;
+    int VY = 2;
+    int dudeWidth = 20;
+    int dudeHeight = 20;
     int pooWidth = 24;
     int pooHeight = 24;
+    int gameOverWidth = 84;
+    int gameOverHeight = 64;
     bool poo0IsEaten = false;
     bool poo1IsEaten = false;
+    bool poo2IsEaten = false;
+    bool isStarted = false;
 
     /********************************/
 };
