@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include <random>
+#include <stdlib.h>
 
 Game::Game( MainWindow& wnd )
 	:
@@ -29,8 +30,8 @@ Game::Game( MainWindow& wnd )
 {
     std::random_device rd;
     std::mt19937 rng( rd() );
-    std::uniform_int_distribution<int> xDist(0,770);
-    std::uniform_int_distribution<int> yDist(0, 570);
+    std::uniform_int_distribution<int> xDist(0,gfx.ScreenWidth - pooWidth - 3);
+    std::uniform_int_distribution<int> yDist(0, gfx.ScreenHeight - pooHeight - 3);
     poo0X = xDist(rng);
     poo0Y = yDist(rng);
     poo1X = xDist(rng);
@@ -72,12 +73,10 @@ void Game::UpdateModel()
 
         dudeX = ClampScreenX(dudeX, dudeWidth);
         dudeY = ClampScreenY(dudeY, dudeHeight);
-        poo0X = MoveX(poo0X, VX);
-        poo0Y = MoveY(poo0Y, VY);
-        poo1X = MoveX(poo1X, VX);
-        poo1Y = MoveY(poo1Y, VY);
-        poo2X = MoveX(poo2X, VX);
-        poo2Y = MoveY(poo2Y, VY);
+
+        Move(&poo0X, &poo0vx, &poo0Y, &poo0vy);
+        Move(&poo1X, &poo1vx, &poo1Y, &poo1vy);
+        Move(&poo2X, &poo2vx, &poo2Y, &poo2vy);
 
         if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
         {
@@ -29011,32 +29010,71 @@ void Game::DrawTitleScreen(int x, int y)
 
 }
 
-int Game::MoveX(int x, int vx)
+//     **********Original Attempt To Move via 2 Seperate Functions**********
+//int Game::MoveX(int x, int* vx)
+//{
+//    int* VX = NULL;
+//    VX = vx;
+//
+//    x = ClampScreenX(x, pooWidth);
+//    if ((x + *vx) >= gfx.ScreenWidth - pooWidth || (x + *vx) <= 0)
+//    {
+//        *vx *= -1;
+//    }
+//
+//    x += *vx;
+//    *VX = *vx;
+//    return x;
+//}
+//int Game::MoveY(int y, int* vy)
+//{
+//    int* VY = NULL;
+//    VY = vy;
+//
+//    y = ClampScreenY(y, pooHeight);
+//    if ((y + *vy) >= gfx.ScreenHeight - pooHeight || (y + *vy) <= 0)
+//    {
+//        *vy *= -1;
+//      
+//    }
+//
+//    y += *vy;
+//    *VY = *vy;
+//    return y;
+//}
+
+void Game::Move(int* x, int* vx, int* y, int* vy)
 {
+    // Move X-AXIS
+    int* VX = vx;
+    int* newX = x;
+
+    *x = ClampScreenX(*x, pooWidth);
+    if ((*x + *vx) >= gfx.ScreenWidth - pooWidth || (*x + *vx) <= 0)
+    {
+        *vx *= -1;
+    }
+
+    *x += *vx;
+    *VX = *vx;
+    *newX = *x;
     
-    x = ClampScreenX(x, pooWidth);
-    if (x == gfx.ScreenWidth - pooWidth - 10)
+
+    //Move Y-AXIS
+    int* VY = NULL;
+    VY = vy;
+    int* newY = y;
+
+    *y = ClampScreenY(*y, pooHeight);
+    if ((*y + *vy) >= gfx.ScreenHeight - pooHeight || (*y + *vy) <= 0)
     {
-        vx *= -3;
+        *vy *= -1;
+
     }
-    if (x == 0)
-    {
-        vx *= -3;
-        
-    }
-    x += vx;
-    return x;
-}
-int Game::MoveY(int y, int vy)
-{
-    y += vy;
-    y = ClampScreenY(y, pooHeight);
-    if (y <= 0 || y >= gfx.ScreenHeight - pooHeight -10)
-    {
-        vy *= -1;
-        y += vy;
-    }
-    return y;
+
+    *y += *vy;
+    *VY = *vy;
+    *newY = *y;
 }
 
 int Game::ClampScreenX(int x, int width)
@@ -29110,7 +29148,7 @@ void Game::ComposeFrame()
         }
         if (!poo1IsEaten)
         {
-            DrawPoo(poo1X, poo1Y);
+           DrawPoo(poo1X, poo1Y);
         }
         if (!poo2IsEaten)
         {
