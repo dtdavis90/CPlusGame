@@ -32,12 +32,12 @@ Game::Game( MainWindow& wnd )
     std::mt19937 rng( rd() );
     std::uniform_int_distribution<int> xDist(0,gfx.ScreenWidth - pooWidth - 3);
     std::uniform_int_distribution<int> yDist(0, gfx.ScreenHeight - pooHeight - 3);
-    poo0X = xDist(rng);
-    poo0Y = yDist(rng);
-    poo1X = xDist(rng);
-    poo1Y = yDist(rng);
-    poo2X = xDist(rng);
-    poo2Y = yDist(rng);
+    poo0.x = xDist(rng);
+    poo0.y = yDist(rng);
+    poo1.x = xDist(rng);
+    poo1.y = yDist(rng);
+    poo2.x = xDist(rng);
+    poo2.y = yDist(rng);
 }
 
 void Game::Go()
@@ -74,21 +74,21 @@ void Game::UpdateModel()
         dudeX = ClampScreenX(dudeX, dudeWidth);
         dudeY = ClampScreenY(dudeY, dudeHeight);
 
-        Move(&poo0X, &poo0vx, &poo0Y, &poo0vy);
-        Move(&poo1X, &poo1vx, &poo1Y, &poo1vy);
-        Move(&poo2X, &poo2vx, &poo2Y, &poo2vy);
+        Move(&poo0.x, &poo0.vx, &poo0.y, &poo0.vy);
+        Move(&poo1.x, &poo1.vx, &poo1.y, &poo1.vy);
+        Move(&poo2.x, &poo2.vx, &poo2.y, &poo2.vy);
 
-        if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
+        if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0.x, poo0.y, pooWidth, pooHeight))
         {
-            poo0IsEaten = true;
+            poo0.xIsEaten = true;
         }
-        if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo1X, poo1Y, pooWidth, pooHeight))
+        if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo1.x, poo1.y, pooWidth, pooHeight))
         {
-            poo1IsEaten = true;
+            poo1.xIsEaten = true;
         }
-        if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo2X, poo2Y, pooWidth, pooHeight))
+        if (isColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo2.x, poo2.y, pooWidth, pooHeight))
         {
-            poo2IsEaten = true;
+            poo2.xIsEaten = true;
         }
 
     }
@@ -29134,7 +29134,7 @@ void Game::ComposeFrame()
     else
     {
 
-        if (poo0IsEaten && poo1IsEaten && poo2IsEaten)
+        if (poo0.xIsEaten && poo1.xIsEaten && poo2.xIsEaten)
         {
             //Draw GameOver Image in Center of Screen
             DrawGameOver((gfx.ScreenWidth / 2) - (gameOverWidth / 2), (gfx.ScreenHeight / 2) - (gameOverHeight / 2));
@@ -29142,17 +29142,17 @@ void Game::ComposeFrame()
 
         DrawFace(dudeX, dudeY);
 
-        if (!poo0IsEaten)
+        if (!poo0.xIsEaten)
         {
-            DrawPoo(poo0X, poo0Y);
+            DrawPoo(poo0.x, poo0.y);
         }
-        if (!poo1IsEaten)
+        if (!poo1.xIsEaten)
         {
-           DrawPoo(poo1X, poo1Y);
+           DrawPoo(poo1.x, poo1.y);
         }
-        if (!poo2IsEaten)
+        if (!poo2.xIsEaten)
         {
-            DrawPoo(poo2X, poo2Y);
+            DrawPoo(poo2.x, poo2.y);
         }
 
     }
