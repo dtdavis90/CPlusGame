@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Poo.h"
+#include "Dude.h"
 
 class Game
 {
@@ -39,7 +40,7 @@ private:
 /*  User Functions              */
 
     void DrawFace(int x, int y);
-    /*void DrawPoo(int x, int y);*/
+    void DrawPoo(int x, int y);
     void DrawGameOver(int x, int y);
     void DrawTitleScreen(int x, int y);
     void Move(int* x, int* vx, int* y, int* vy);
@@ -54,13 +55,10 @@ private:
     /********************************/
     /*  User Variables              */
 
-    int dudeX = 100;
-    int dudeY = 300;
+    Dude dude;
     Poo poo0;
     Poo poo1;
     Poo poo2;
-    int dudeWidth = 20;
-    int dudeHeight = 20;
     int gameOverWidth = 84;
     int gameOverHeight = 64;
     bool isStarted = false;

@@ -1,10 +1,11 @@
 #pragma once
-
+#include "Graphics.h"
 
 class Poo
 {
 
 public:
+
     static void DrawPoo(int x, int y);
     void Update();
     int x;
@@ -15,4 +16,5 @@ public:
     static constexpr int height = 24;
     bool isEaten = false;
 
+    Graphics gfx;
 };
