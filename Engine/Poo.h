@@ -6,15 +6,15 @@ class Poo
 
 public:
 
-    static void DrawPoo(int x, int y);
+    void DrawPoo(int x, int y);
+
     void Update();
-    int x;
-    int y;
-    int vx;
-    int vy;
+    int x = 150;
+    int y = 25;
+    int vx = 1;
+    int vy = 1;
     static constexpr int width = 24;
     static constexpr int height = 24;
     bool isEaten = false;
 
-    Graphics gfx;
 };

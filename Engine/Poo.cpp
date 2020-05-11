@@ -25,9 +25,11 @@ void Poo::Update()
     }
     else if (y + height >= gfx.ScreenHeight)
     {
-        y = gfx.ScreenHeight - height;
+        y = gfx.ScreenHeight - height; 
         vy = -vy;
     }
 }
+
+
 
 

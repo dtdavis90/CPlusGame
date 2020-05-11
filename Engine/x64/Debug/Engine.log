@@ -1,6 +1,1 @@
-﻿  Game.cpp
-  Main.cpp
-  MainWindow.cpp
-  Poo.cpp
-C:\Users\dadavisa\Desktop\ChiliStuff\Chili DirectX Framework\Chili Framework 2016\Engine\Poo.cpp(4,10): error C2512: 'Graphics': no appropriate default constructor available
-C:\Users\dadavisa\Desktop\ChiliStuff\Chili DirectX Framework\Chili Framework 2016\Engine\Graphics.h(27,7): message : see declaration of 'Graphics' (compiling source file Poo.cpp)
+﻿  Engine.vcxproj -> C:\Users\Daniel\Desktop\Chili\ChiliProject\CPlusGame\x64\Debug\Engine.exe
